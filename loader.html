@@ -1,0 +1,26 @@
+<html>
+ <head>
+	<script src="ahx_cruisin.js"></script>
+  	<script type="application/javascript">
+  
+var player;
+
+function playSong()
+{
+
+	var ahxMaster = AHXMaster(); 
+	var ahxSong = new AHXSong();
+	ahxSong.LoadSong('THX.flava4-s2', function() { // asynchronously load a AHX song into memory
+		ahxMaster.Play(ahxSong); // start playing
+		// continue init your demo here
+	});
+}
+
+
+  </script>
+ </head>
+ <body onload="playSong()">
+   
+ </body>
+</html>
+
