@@ -1,8 +1,6 @@
 TPOLM - Parsley State
 =====================
 
-Parsley State
-
 
 source code for TPOLM's Parsley State  
 10k intro for DemoJS 2012  
