@@ -41,7 +41,7 @@ var pattern = note = 0;
 
 var noise = [];
 
-
+var startTime = (new Date()).getTime();
 
 //
 // request animation frame, from random place on the internet
@@ -1861,7 +1861,8 @@ function drawCanvas() {
 						else fText("ps . kaneel . fthr");
 					if (rand(255)>240) {
 						flip = !flip;
-					}				
+					}
+					if ((timer - startTime) > 100000) D.location.href=D.location.href;
 				} else {
 
 					if (pattern<2) {
