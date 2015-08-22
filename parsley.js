@@ -1,12 +1,11 @@
 var D = document;
-D.title = "TPOLM 9012";
+D.title = "TPOLM 9015";
 
 PI = Math.PI;
 si = Math.sin;
 M = Math.max;
 N = Math.min;
 Q = Math.sqrt;
-
 
 var b = D.body;
 var Ms = b.style;
@@ -19,7 +18,7 @@ b.appendChild(c);
 c.style.background = "#fff";
 
 //
-// hash our larger canvas context functions
+// hash canvas context functions larger then 6 characters
 // based on a hack documented by cb and p01
 // referenced in closure_ctxhash.js
 //
@@ -76,14 +75,19 @@ var startTime = (new Date()).getTime();
 
 //
 // ahx replayer, slightly adapted from ahx.js of Cruisin' / Abyss
-// hacked for size, some effects werent being used by the song so they were commented 
+// hacked for size, some effects werent being used by the song so they were commented
+//
+// patched in 2015 to only use AudioContext() instead of deprecated functions in Firefox and webkit 
 //
 
 function AHXMaster() {
-	if(typeof(webkitAudioContext) != 'undefined')
+	/*if(typeof(webkitAudioContext) != 'undefined')
 		return new AHXMasterWebKit();
 	else if(typeof(new Audio().mozSetup) != 'undefined')
 		return new AHXMasterMoz();
+	*/
+	if(typeof(AudioContext) != 'undefined')
+		return new AHXMasterAudioContext();
 	else
 		return new AHXMasterNull();
 }
@@ -1262,25 +1266,27 @@ function AHXOutput(player) {
 	}
 }
 
-AHXMasterWebKit = function(output) {
+//AHXMasterWebKit = function(output) {
+AHXMasterAudioContext = function(output) {
 	this.Output = output || AHXOutput();
 	this.AudioContext = null;
 	this.AudioNode = null;
 };
 
-AHXMasterWebKit.prototype = {
+//AHXMasterWebKit.prototype = {
+AHXMasterAudioContext.prototype = {
 	Play: function(song) { // song = AHXSong()
 		this.Output.Player.InitSong(song);
 		this.Output.Player.InitSubsong(0);
 		if(!this.AudioContext) 
-			this.AudioContext = new webkitAudioContext();
+			this.AudioContext = new AudioContext();
 		this.Output.Init(this.AudioContext.sampleRate, 16);
 		this.bufferSize = 8192;
 		this.bufferFull = 0;
 		this.bufferOffset = 0;
 		if(this.AudioNode) 
 			this.AudioNode.disconnect();
-		this.AudioNode = this.AudioContext.createJavaScriptNode(this.bufferSize);
+		this.AudioNode = this.AudioContext.createScriptProcessor(this.bufferSize);
 		var theMaster = this;
 		this.AudioNode.onaudioprocess = function (event) {
 			theMaster.mixer(event);
@@ -1328,7 +1334,7 @@ AHXMasterWebKit.prototype = {
 
 }
 
-
+/*
 function AHXMasterMoz(output) {
 	function AudioDataDestination(sampleRate, readFn) {
 	  // Initialize the audio output.
@@ -1432,7 +1438,7 @@ function AHXMasterMoz(output) {
 	this.reset();
 	return this;
 }
-
+*/
 function AHXMasterNull() {
 	this.Play = function(stream) {
 	}
@@ -1794,6 +1800,7 @@ with(ctx) {
 
 function drawCanvas() {
 	
+/* not used
 	var renderToCanvas = function (width, height, renderFunction) {
 		var buffer = document.createElement('canvas');
 		buffer.width = width;
@@ -1801,7 +1808,7 @@ function drawCanvas() {
 		renderFunction(buffer.getContext('2d'));
 		return buffer;
 	};
-
+*/
 
 	function drawThis() {
 		
