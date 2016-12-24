@@ -4,7 +4,9 @@ TPOLM - Parsley State
 
 source code for TPOLM's Parsley State  
 10k intro for DemoJS 2012  
-http://pouet.net/prod.php?which=59402  
+http://pouet.net/prod.php?which=59402 
+
+online link: http://psenough.github.io/tpolm_-_parsley_state/
 
 
 parsley state coat of arms made by kaneel was converted from svg to canvas by using random internet site and some manual cleaning.
